@@ -1,0 +1,52 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  APP_ENV: ci
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Calidad de codigo (ruff)
+        run: ruff check .
+
+      - name: Tests (pytest)
+        run: pytest
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Construir imagen
+        run: docker build -t smartcampus .
+
+      - name: Arrancar contenedor y comprobar /health
+        run: |
+          docker run -d --name smartcampus -p 8000:8000 smartcampus
+          for i in $(seq 1 15); do
+            curl -fs http://localhost:8000/health && exit 0
+            sleep 2
+          done
+          docker logs smartcampus
+          exit 1
