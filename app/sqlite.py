@@ -1,12 +1,8 @@
 import sqlite3
 
-conexion = sqlite3.connect("mi_base_de_datos.db")
+from app.config import get_db_path
 
-cursor = conexion.cursor()
-
-cursor.executescript("""
-PRAGMA foreign_keys = ON;
-
+SCHEMA = """
 CREATE TABLE IF NOT EXISTS rooms (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre       TEXT    NOT NULL,
@@ -26,9 +22,21 @@ CREATE TABLE IF NOT EXISTS bookings (
     FOREIGN KEY (aula_id) REFERENCES rooms(id) ON DELETE CASCADE
 );
 
-CREATE INDEX IF NOT EXISTS idx_bookings_aula_fecha
-ON bookings (aula_id, fecha);
-""")
+CREATE INDEX IF NOT EXISTS idx_bookings_aula_fecha ON bookings (aula_id, fecha);
+"""
 
-conexion.commit()
-conexion.close()
+
+def get_connection() -> sqlite3.Connection:
+    conn = sqlite3.connect(get_db_path())
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
+    return conn
+
+
+def init_db() -> None:
+    conn = get_connection()
+    try:
+        conn.executescript(SCHEMA)
+        conn.commit()
+    finally:
+        conn.close()
