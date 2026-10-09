@@ -7,3 +7,4 @@ commit-log.txt
 *.db
 venv
 *.db
+app/__pycache__
