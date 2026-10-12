@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from app.routers import rooms
+from app.routers import bookings, rooms
 
 
 from app.sqlite import init_db
@@ -15,6 +15,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="SmartCampus", lifespan=lifespan)
 app.include_router(rooms.router)
+app.include_router(bookings.router)
 
 
 @app.get("/health")
