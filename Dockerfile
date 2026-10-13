@@ -12,8 +12,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 
-# Usuario no root
-RUN useradd --create-home appuser && chown -R appuser /code
+# Usuario no root y carpeta de datos (SQLite) con permisos para ese usuario.
+# Un volumen nuevo montado en /data hereda estos permisos.
+RUN useradd --create-home appuser \
+    && mkdir /data \
+    && chown -R appuser /code /data
+ENV DB_PATH=/data/smartcampus.db
 USER appuser
 
 EXPOSE 8000
