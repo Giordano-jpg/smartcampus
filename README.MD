@@ -249,27 +249,64 @@ ruff format .
 
 ## Docker
 
-_Pendiente (Giordano)._ Se explicará cómo construir y ejecutar la imagen:
+La imagen parte de `python:3.12-slim`. Copia primero `requirements.txt` para aprovechar la caché de capas, corre con un usuario no root (`appuser`) y guarda la base de datos SQLite en `/data` (`DB_PATH=/data/smartcampus.db`).
 
 ```bash
 docker build -t smartcampus .
 docker run -p 8000:8000 smartcampus
 ```
 
+La API queda en http://localhost:8000 (Swagger en `/docs`). Sin volumen, los datos se pierden al borrar el contenedor; para conservarlos: `docker run -p 8000:8000 -v smartcampus-data:/data smartcampus`.
+
 ## Docker Compose
 
-_Pendiente (Giordano)._ Se explicará el despliegue con `docker compose up --build`: servicios, variables de entorno, redes, volúmenes y healthchecks.
+Levanta la aplicación con su configuración, red, volumen y healthcheck:
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+| Variable (`.env`) | Descripción |
+|---|---|
+| `APP_ENV` | Entorno de ejecución |
+| `APP_PORT` | Puerto publicado en el equipo (por defecto 8000) |
+| `DB_PATH` | Ruta del SQLite dentro del contenedor |
+
+El servicio `backend` usa:
+
+- **Variables:** se leen del `.env` (que no se sube a Git; el repositorio incluye `.env.example`).
+- **Red:** `smartcampus-net`, propia del proyecto.
+- **Volumen:** `smartcampus-data` montado en `/data`, para que la base de datos sobreviva a reinicios y a `docker compose down`.
+- **Healthcheck:** cada 10 s llama a `GET /health`; el contenedor pasa a `healthy` cuando responde.
+- **Reinicio:** `restart: unless-stopped`.
+
+No hay servicio de base de datos porque se usa SQLite en fichero, por eso tampoco hay `depends_on`. Para parar: `docker compose down` (conserva los datos) o `docker compose down -v` (los borra).
 
 ## GitHub Actions
 
-_Pendiente (Giordano)._ Se documentará el workflow `.github/workflows/ci-cd.yml`:
+El workflow está en `.github/workflows/ci-cd.yml`.
 
-- Cuándo se ejecuta.
-- Etapas del pipeline.
-- Matrix (Python 3.11 y 3.12).
-- Variables de entorno y GitHub Secrets.
-- Construcción de la imagen Docker.
-- Despliegue automático.
+**Cuándo se ejecuta:** en cada `push` y `pull_request` sobre `main` y `develop`. Los jobs `publish` y `deploy` solo se ejecutan en un `push` a `main`; en las Pull Requests aparecen como _skipped_.
+
+**Etapas:**
+
+| Job | Dónde corre | Qué hace |
+|---|---|---|
+| `test` | GitHub (ubuntu) | Checkout, instala dependencias, calidad (`ruff check` y `ruff format --check`) y `pytest` |
+| `build` | GitHub (ubuntu) | `docker build -t smartcampus .`, arranca el contenedor y comprueba `/health` con `curl` |
+| `publish` | GitHub (ubuntu) | Inicia sesión en Docker Hub y publica la imagen (`latest` y el hash del commit) |
+| `deploy` | Runner propio (self-hosted) | `docker compose up -d --build` y comprueba `/health` |
+
+Cada job depende del anterior (`needs`): si falla uno, los siguientes no se ejecutan.
+
+**Matrix:** el job `test` se ejecuta con Python 3.11 y 3.12 en paralelo, para comprobar que la aplicación funciona en ambas versiones.
+
+**Variables:** el workflow define `APP_ENV` con `env:`. En el despliegue se genera un `.env` de producción con `APP_ENV=production`, `APP_PORT` y `DB_PATH`.
+
+**Secrets:** se usan `DOCKER_USERNAME` y `DOCKER_PASSWORD` (un token de acceso de Docker Hub, no la contraseña). Se guardan en Settings → Secrets and variables → Actions, solo se leen en el job `publish`, no aparecen en el código ni en el repositorio, y GitHub los oculta en los logs.
+
+**Despliegue:** se hace con un _self-hosted runner_ (opción A del enunciado) instalado en el equipo que actúa como servidor. Cuando se actualiza `main`, GitHub le envía el job `deploy` y el runner levanta la aplicación con Docker Compose en ese equipo, accesible en http://localhost:8000. El runner debe estar en marcha (`./run.sh` dentro de `actions-runner`) para que el despliegue se ejecute.
 
 ## Flujo de trabajo en Git
 
@@ -293,9 +330,10 @@ Las capturas se guardan en `docs/img/`.
 | `post-commit` (`commit-log.txt`) | _pendiente_ |
 | `pre-push` rechazando un push | _pendiente_ |
 | `pre-push` aceptando + `post-push` (`git pushp`) | _pendiente_ |
-| Imagen Docker construida | _pendiente_ |
-| Docker Compose en ejecución | _pendiente_ |
-| Pipeline de GitHub Actions ejecutado | _pendiente_ |
-| Matrix (Python 3.11 y 3.12) | _pendiente_ |
-| GitHub Secrets configurados (sin valores) | _pendiente_ |
+| Imagen Docker construida | [captura](docs/img/docker-compose-healthy.png) |
+| Docker Compose en ejecución | [captura](docs/img/docker-compose-healthy.png) |
+| Pipeline de GitHub Actions ejecutado | [captura](docs/img/pipeline-verde-matrix.png) |
+| Matrix (Python 3.11 y 3.12) | [captura](docs/img/pipeline-verde-matrix.png) |
+| GitHub Secrets configurados (sin valores) | [captura](docs/img/secrets-configurados.png) |
+| Runner self-hosted activo | [captura](docs/img/runner-idle.png) |
 | Aplicación desplegada | _pendiente_ |
