@@ -26,9 +26,7 @@ def create_booking(data: BookingCreate):
     except services.RoomNotFoundError:
         raise HTTPException(status_code=404, detail="Aula no encontrada")
     except services.BookingOverlapError:
-        raise HTTPException(
-            status_code=409, detail="Ya existe una reserva solapada para esa aula"
-        )
+        raise HTTPException(status_code=409, detail="Ya existe una reserva solapada para esa aula")
 
 
 @router.delete("/{booking_id}", status_code=status.HTTP_204_NO_CONTENT)

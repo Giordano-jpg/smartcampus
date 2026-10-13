@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app.sqlite import init_db
 from app.main import app
+from app.sqlite import init_db
 
 
 @pytest.fixture(autouse=True)
