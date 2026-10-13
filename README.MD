@@ -332,8 +332,9 @@ Las capturas se guardan en `docs/img/`.
 | `pre-push` aceptando + `post-push` (`git pushp`) | _pendiente_ |
 | Imagen Docker construida | [captura](docs/img/docker-compose-healthy.png) |
 | Docker Compose en ejecución | [captura](docs/img/docker-compose-healthy.png) |
-| Pipeline de GitHub Actions ejecutado | [captura](docs/img/pipeline-verde-matrix.png) |
+| Pipeline de GitHub Actions ejecutado (test, build, publish y deploy) | [captura](docs/img/pipeline-main-completo.png) |
 | Matrix (Python 3.11 y 3.12) | [captura](docs/img/pipeline-verde-matrix.png) |
+| Imagen publicada en Docker Hub | [captura](docs/img/publish-summary.png) |
 | GitHub Secrets configurados (sin valores) | [captura](docs/img/secrets-configurados.png) |
 | Runner self-hosted activo | [captura](docs/img/runner-idle.png) |
-| Aplicación desplegada | _pendiente_ |
+| Aplicación desplegada | [captura](docs/img/app-desplegada-swagger.png) |
