@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Cambios enviados correctamente al repositorio remoto."
+# Opcional: aquí podrías ejecutar `make docs` o actualizar un fichero de info

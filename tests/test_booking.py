@@ -55,9 +55,7 @@ def test_create_booking_room_not_found(client):
     [("12:00", "10:00"), ("10:00", "10:00")],
 )
 def test_create_booking_invalid_hours(client, room, inicio, fin):
-    r = client.post(
-        "/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin)
-    )
+    r = client.post("/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin))
     assert r.status_code == 422
 
 
@@ -85,18 +83,14 @@ def test_create_booking_missing_field(client, room):
 )
 def test_create_booking_overlap(client, room, inicio, fin):
     client.post("/bookings", json=booking(room["id"]))
-    r = client.post(
-        "/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin)
-    )
+    r = client.post("/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin))
     assert r.status_code == 409
 
 
 @pytest.mark.parametrize("inicio,fin", [("12:00", "14:00"), ("08:00", "10:00")])
 def test_adjacent_bookings_allowed(client, room, inicio, fin):
     client.post("/bookings", json=booking(room["id"]))
-    r = client.post(
-        "/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin)
-    )
+    r = client.post("/bookings", json=booking(room["id"], hora_inicio=inicio, hora_fin=fin))
     assert r.status_code == 201
 
 

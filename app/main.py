@@ -1,9 +1,8 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+
 from app.routers import bookings, rooms
-
-
 from app.sqlite import init_db
 
 

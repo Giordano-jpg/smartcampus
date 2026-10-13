@@ -8,21 +8,24 @@ pytestmark = pytest.mark.unit
 
 
 def make_room(**kw):
-    data = dict(
-        nombre="Lab A", edificio="Edificio A", capacidad=30, equipamiento=["ordenadores"]
-    )
+    data = {
+        "nombre": "Lab A",
+        "edificio": "Edificio A",
+        "capacidad": 30,
+        "equipamiento": ["ordenadores"],
+    }
     data.update(kw)
     return services.create_room(RoomCreate(**data))
 
 
 def booking(aula_id, **kw):
-    data = dict(
-        aula_id=aula_id,
-        usuario="ana",
-        fecha="2026-10-12",
-        hora_inicio="10:00",
-        hora_fin="12:00",
-    )
+    data = {
+        "aula_id": aula_id,
+        "usuario": "ana",
+        "fecha": "2026-10-12",
+        "hora_inicio": "10:00",
+        "hora_fin": "12:00",
+    }
     data.update(kw)
     return BookingCreate(**data)
 

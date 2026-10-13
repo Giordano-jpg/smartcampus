@@ -1,0 +1,15 @@
+#!/bin/sh
+# Registro local de cada commit en commit-log.txt
+
+autor=$(git log -1 --pretty=format:'%an')
+hash=$(git log -1 --pretty=format:'%h')
+mensaje=$(git log -1 --pretty=format:'%s')
+fecha=$(git log -1 --pretty=format:'%ad' --date=format:'%d/%m/%Y')
+
+{
+  echo "Autor: $autor"
+  echo "Hash: $hash"
+  echo "Mensaje: $mensaje"
+  echo "Fecha: $fecha"
+  echo "---"
+} >> commit-log.txt
