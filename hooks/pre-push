@@ -1,0 +1,15 @@
+#!/bin/sh
+# Tests unitarios + integración antes de cada push
+
+for act in venv/bin/activate .venv/bin/activate venv/Scripts/activate .venv/Scripts/activate; do
+  if [ -f "$act" ]; then . "$act"; break; fi
+done
+
+echo "pre-push: ejecutando tests unitarios e integración..."
+if pytest -m unit -q && pytest -m integration -q; then
+  echo "Todos los tests superados"
+  exit 0
+else
+  echo "Push rechazado: existen tests fallidos"
+  exit 1
+fi
