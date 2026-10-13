@@ -5,13 +5,13 @@ for act in venv/bin/activate .venv/bin/activate venv/Scripts/activate .venv/Scri
   if [ -f "$act" ]; then . "$act"; break; fi
 done
 
-echo "🔍 pre-commit: comprobando calidad del código..."
+echo "pre-commit: comprobando calidad del código..."
 if ! ruff check . || ! ruff format --check .; then
   echo "Commit rechazado: errores de calidad/formato (prueba: ruff check --fix . && ruff format .)"
   exit 1
 fi
 
-echo "🧪 pre-commit: ejecutando tests unitarios..."
+echo "pre-commit: ejecutando tests unitarios..."
 if ! pytest -m unit -q; then
   echo "Commit rechazado: fallan los tests unitarios"
   exit 1
