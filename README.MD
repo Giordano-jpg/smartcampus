@@ -322,9 +322,9 @@ Las capturas se guardan en `docs/img/`.
 
 | Evidencia | Estado |
 |---|---|
-| Aplicación funcionando (Swagger `/docs`) | _pendiente_ |
-| Errores 404, 409 y 422 | _pendiente_ |
-| Tests en verde (`pytest -v`) | _pendiente_ |
+| Aplicación funcionando (Swagger `/docs`) | [captura](docs/img/app-funcionando.png) |
+| Errores 404, 409 y 422 | [404](docs/img/404.png), [409](docs/img/409.png), [422](docs/img/422.png) |
+| Tests en verde (`pytest -v`) | [captura](docs/img/pytest-funcionando.png) |
 | `pre-commit` aceptando un commit | _pendiente_ |
 | `pre-commit` rechazando un commit | _pendiente_ |
 | `post-commit` (`commit-log.txt`) | _pendiente_ |
