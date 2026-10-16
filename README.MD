@@ -4,7 +4,6 @@ Microservicio REST para la gestión de aulas y reservas de espacios universitari
 
 **Equipo:** Fer y Giordano.
 
-> Las secciones marcadas como _pendiente_ las irá completando cada miembro del equipo conforme avance su parte.
 
 ## Índice
 
