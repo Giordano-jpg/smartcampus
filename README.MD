@@ -325,11 +325,11 @@ Las capturas se guardan en `docs/img/`.
 | Aplicación funcionando (Swagger `/docs`) | [captura](docs/img/app-funcionando.png) |
 | Errores 404, 409 y 422 | [404](docs/img/404.png), [409](docs/img/409.png), [422](docs/img/422.png) |
 | Tests en verde (`pytest -v`) | [captura](docs/img/pytest-funcionando.png) |
-| `pre-commit` aceptando un commit | _pendiente_ |
-| `pre-commit` rechazando un commit | _pendiente_ |
-| `post-commit` (`commit-log.txt`) | _pendiente_ |
-| `pre-push` rechazando un push | _pendiente_ |
-| `pre-push` aceptando + `post-push` (`git pushp`) | _pendiente_ |
+| `pre-commit` aceptando un commit | [captura](docs/img/precommit-ok.png) |
+| `pre-commit` rechazando un commit | [captura](docs/img/precommit-rechazado.png) |
+| `post-commit` (`commit-log.txt`) | [captura](docs/img/postcommit-log.png) |
+| `pre-push` rechazando un push | [captura](docs/img/prepush-rechazado.png) |
+| `pre-push` aceptando + `post-push` (`git pushp`) | [captura](docs/img/prepush-ok-postpush-ok.png) |
 | Imagen Docker construida | [captura](docs/img/docker-compose-healthy.png) |
 | Docker Compose en ejecución | [captura](docs/img/docker-compose-healthy.png) |
 | Pipeline de GitHub Actions ejecutado (test, build, publish y deploy) | [captura](docs/img/pipeline-main-completo.png) |
