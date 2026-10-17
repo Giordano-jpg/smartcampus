@@ -4,7 +4,6 @@ Microservicio REST para la gestión de aulas y reservas de espacios universitari
 
 **Equipo:** Fer y Giordano.
 
-> Las secciones marcadas como _pendiente_ las irá completando cada miembro del equipo conforme avance su parte.
 
 ## Índice
 
@@ -322,18 +321,19 @@ Las capturas se guardan en `docs/img/`.
 
 | Evidencia | Estado |
 |---|---|
-| Aplicación funcionando (Swagger `/docs`) | _pendiente_ |
-| Errores 404, 409 y 422 | _pendiente_ |
-| Tests en verde (`pytest -v`) | _pendiente_ |
-| `pre-commit` aceptando un commit | _pendiente_ |
-| `pre-commit` rechazando un commit | _pendiente_ |
-| `post-commit` (`commit-log.txt`) | _pendiente_ |
-| `pre-push` rechazando un push | _pendiente_ |
-| `pre-push` aceptando + `post-push` (`git pushp`) | _pendiente_ |
+| Aplicación funcionando (Swagger `/docs`) | [captura](docs/img/app-funcionando.png) |
+| Errores 404, 409 y 422 | [404](docs/img/404.png), [409](docs/img/409.png), [422](docs/img/422.png) |
+| Tests en verde (`pytest -v`) | [captura](docs/img/pytest-funcionando.png) |
+| `pre-commit` aceptando un commit | [captura](docs/img/precommit-ok.png) |
+| `pre-commit` rechazando un commit | [captura](docs/img/precommit-rechazado.png) |
+| `post-commit` (`commit-log.txt`) | [captura](docs/img/postcommit-log.png) |
+| `pre-push` rechazando un push | [captura](docs/img/prepush-rechazado.png) |
+| `pre-push` aceptando + `post-push` (`git pushp`) | [captura](docs/img/prepush-ok-postpush-ok.png) |
 | Imagen Docker construida | [captura](docs/img/docker-compose-healthy.png) |
 | Docker Compose en ejecución | [captura](docs/img/docker-compose-healthy.png) |
-| Pipeline de GitHub Actions ejecutado | [captura](docs/img/pipeline-verde-matrix.png) |
+| Pipeline de GitHub Actions ejecutado (test, build, publish y deploy) | [captura](docs/img/pipeline-main-completo.png) |
 | Matrix (Python 3.11 y 3.12) | [captura](docs/img/pipeline-verde-matrix.png) |
+| Imagen publicada en Docker Hub | [captura](docs/img/publish-summary.png) |
 | GitHub Secrets configurados (sin valores) | [captura](docs/img/secrets-configurados.png) |
 | Runner self-hosted activo | [captura](docs/img/runner-idle.png) |
-| Aplicación desplegada | _pendiente_ |
+| Aplicación desplegada | [captura](docs/img/app-desplegada-swagger.png) |
