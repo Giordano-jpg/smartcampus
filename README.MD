@@ -2,7 +2,7 @@
 
 Microservicio REST para la gestión de aulas y reservas de espacios universitarios, desarrollado para SmartCampus Solutions como parte de la Práctica 1: automatización y despliegue de una aplicación con Git Hooks y GitHub Actions.
 
-**Equipo:** Fer y Giordano.
+**Equipo:** Fernando y Giordano.
 
 
 ## Índice
@@ -83,7 +83,7 @@ smartcampus/
 Requisitos: Python 3.11 o superior.
 
 ```bash
-git clone <url-del-repositorio>
+git clone <https://github.com/Giordano-jpg/smartcampus.git>
 cd smartcampus
 
 python -m venv venv
@@ -210,10 +210,10 @@ El script da permisos de ejecución a los hooks, ejecuta `git config core.hooksP
 
 | Hook | Cuándo | Qué hace | Si falla |
 |---|---|---|---|
-| `pre-commit` | Antes de cada commit | Ejecuta `ruff check`, `ruff format --check` y `pytest -m unit` | `❌ Commit rechazado` y el commit no se crea |
+| `pre-commit` | Antes de cada commit | Ejecuta `ruff check`, `ruff format --check` y `pytest -m unit` | `Commit rechazado` y el commit no se crea |
 | `post-commit` | Después de cada commit | Añade a `commit-log.txt` autor, hash, mensaje y fecha | — |
-| `pre-push` | Antes de cada push | Ejecuta `pytest -m unit` y `pytest -m integration` | `❌ Push rechazado: existen tests fallidos` |
-| `post-push` | Después de un push correcto | Muestra `🚀 Cambios enviados correctamente al repositorio remoto.` | — |
+| `pre-push` | Antes de cada push | Ejecuta `pytest -m unit` y `pytest -m integration` | `Push rechazado: existen tests fallidos` |
+| `post-push` | Después de un push correcto | Muestra `Cambios enviados correctamente al repositorio remoto.` | — |
 
 ### Registro de commits
 
